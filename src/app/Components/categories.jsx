@@ -9,7 +9,7 @@ const onewinner = {
   'Minimum of two players'
 ],
     biggi : "1x",
-    link : ""
+    link : "./create"
 }
 
 const threewinner = {
@@ -22,7 +22,7 @@ const threewinner = {
   'Minimum of five players'
 ],
     biggi : "3x",
-    link : ""
+    link : "./create"
 }
 
 const fivewinner = {
@@ -37,16 +37,16 @@ const fivewinner = {
   'Minimum of ten players'
 ],
     biggi : "5x",
-    link : ""
+    link : "./create"
 }
 
 
 export default function Categories() {
   return (
-    <div className="bg-white py-24 sm:py-32">
+    <div className="bg-white py-24 sm:py-32" id="categories">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl sm:text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Simple no-tricks pricing</h2>
+          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Simple and easy to play</h2>
         </div>
         <Categorycard info={onewinner}/>
         <Categorycard info={threewinner}/>

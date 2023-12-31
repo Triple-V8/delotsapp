@@ -8,10 +8,10 @@ import logo from "./vlogo.png";
 
 
 const navigation = [
-  { name: 'How to', href: '#' },
-  { name: 'Features', href: '#' },
-  { name: 'Categories', href: '#' },
-  { name: 'Reach us', href: '#' },
+  { name: 'How to', href: './howto' },
+  { name: 'Features', href: '#features' },
+  { name: 'Categories', href: '#categories' },
+  { name: 'Reach us', href: '#reachus' },
 ]
 
 export default function Header() {
@@ -19,7 +19,7 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <div className="bg-white">
+    <div className="bg-white" id="#about">
       
       <header className="absolute inset-x-0 top-0 z-10">
         <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
@@ -83,7 +83,7 @@ export default function Header() {
             </div>
             <div className="mt-6 flow-root">
               <div className="-my-6 divide-y divide-gray-500/10">
-                <div className="space-y-2 py-6">
+                <div className="space-y-2 py-6" onClick={() => setMobileMenuOpen(false)}>
                   {navigation.map((item) => (
                     <a
                       key={item.name}

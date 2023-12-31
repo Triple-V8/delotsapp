@@ -2,11 +2,11 @@
 'use client';
 
 import { Footer } from 'flowbite-react';
-import { BsDribbble, BsFacebook, BsGithub, BsInstagram, BsTwitter } from 'react-icons/bs';
+import { BsDribbble, BsFacebook, BsGithub, BsMailbox2, BsTwitter, BsTelegram } from 'react-icons/bs';
 
 export default function Footers() {
   return (
-    <Footer container className="text-danger">
+    <Footer container className="text-danger" id="reachus">
       <div className="w-full text-center text-danger">
         <div className="w-full justify-between sm:flex sm:items-center sm:justify-between text-danger">
           <Footer.Brand
@@ -17,10 +17,10 @@ export default function Footers() {
             name=" Delot"
           />
           <Footer.LinkGroup className='text-danger'>
-            <Footer.Link href="#" className='ms-2 me-2'><span className="omoor">How to</span></Footer.Link>
-            <Footer.Link href="#" className='ms-2 me-2'><span className="omoor">Features</span></Footer.Link>
-            <Footer.Link href="#" className='ms-2 me-2'><span className="omoor">Categories</span></Footer.Link>
-            <Footer.Link href="#" className='ms-2 me-2'><span className="omoor">About</span></Footer.Link>
+            <Footer.Link href="./howto" className='ms-2 me-2'><span className="omoor">How to</span></Footer.Link>
+            <Footer.Link href="#features" className='ms-2 me-2'><span className="omoor">Features</span></Footer.Link>
+            <Footer.Link href="#categories" className='ms-2 me-2'><span className="omoor">Categories</span></Footer.Link>
+            <Footer.Link href="#about" className='ms-2 me-2'><span className="omoor">About</span></Footer.Link>
           </Footer.LinkGroup>
         </div>
         <Footer.Divider />
@@ -28,6 +28,8 @@ export default function Footers() {
         <div className="mt-4 flex space-x-6 sm:mt-0 justify-content-center">
             <Footer.Icon href="#" icon={BsTwitter} className="text-danger"/>
             <Footer.Icon href="#" icon={BsGithub} className="text-danger" />
+            <Footer.Icon href="#" icon={BsMailbox2} className="text-danger" />
+            <Footer.Icon href="#" icon={BsTelegram} className="text-danger" />
           </div>
       </div>
     </Footer>
