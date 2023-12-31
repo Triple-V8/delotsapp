@@ -5,13 +5,6 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link';
 import Image from 'next/image';
 import logo from "./vlogo.png";
-import create from '../create/page';
-import {
-  HashRouter as Router,
-  Routes,
-  Route,
-  useLocation,
-} from "react-router-dom";
 
 
 const navigation = [
