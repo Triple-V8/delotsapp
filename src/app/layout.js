@@ -20,12 +20,13 @@ export default function RootLayout({ children }) {
         <meta property="og:title" content="Delots" />
         <meta
           property="og:image"
-          content="./Components/vlogo.png"
+          content="./vlogo.png"
         />
-        <meta name="twitter:card" content="./Components/vlogo.png" />
+        <meta name="twitter:card" content="./vlogo.png" />
         <meta name="twitter:title" content="Delots" />
         <meta name="twitter:description" content="Blockchain-powered lottery, unleashing the future of lotteries!" />
-        <meta name="twitter:image" content="./Components/vlogo.png" />
+        <meta name="twitter:image" content="./vlogo.png" />
+
         <body className={inter.className}>{children}</body>
       </html>
     
