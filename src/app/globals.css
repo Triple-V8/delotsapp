@@ -1,0 +1,150 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+.connectbtn{
+  position:absolute; top:3%; right:5%;
+}
+
+/*---------------------------------------
+  React Modal      
+-----------------------------------------*/
+
+.Modal {
+  position: absolute;
+  height: fit-content;
+  left: 30%;
+  right: 30%;
+  width: 40%;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 20px;
+  background-color: rgb(247, 247, 247);
+  z-index: 9999;
+}
+
+.ReactModal__Overlay {
+  opacity: 0;
+  transition: opacity 500ms ease-in-out;
+}
+
+.ReactModal__Overlay--after-open{
+  opacity: 1;
+}
+
+.ReactModal__Overlay--before-close{
+  opacity: 0;
+}
+
+.opaque-div {
+  opacity: 0.5;
+  font-size: smaller;
+  transition: width 500ms, height 500ms, transform 500ms;
+}
+
+.back {
+  position: absolute;
+  left: 20px;
+  top: 30px
+}
+
+.logs{
+  max-width: 60%;
+  margin: auto;
+  margin-top: 5px
+}
+
+/*---------------------------------------
+ Mobile  
+-----------------------------------------*/
+
+@media screen and (max-width: 480px) {
+
+  .Modal {
+  position: absolute;
+  left: 5%;
+  right: 5%;
+  width: 90%;
+  top: 50%;
+  transform: translateY(-50%);
+  height: fit-content;
+  border-radius: 20pxs;
+  background-color: rgb(247, 247, 247);
+}
+.logs{
+  max-width: 100%;
+  margin: auto;
+  margin-top: 5px
+}
+}
+
+.flex-container {
+  display: flex;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: auto;
+  justify-content: center; 
+}
+
+.flex-item {
+  /* Adjust styles for your items */
+  margin: 5px;
+  padding: 1px;
+  
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 10px solid #f3f3f3; /* Light grey */
+  border-top: 10px solid #383636; /* Black */
+  border-radius: 50%;
+  animation: spinner 1.5s linear infinite;
+}
+
+.spinner-container {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  height: 350px;
+}
+
+.isolate {
+  height: 100vh;
+}
+
+.omoor{
+  color: red !important;
+}
