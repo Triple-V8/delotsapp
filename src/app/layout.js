@@ -16,6 +16,10 @@ export default function RootLayout({ children }) {
       property="description"
       content="Blockchain-powered lottery, unleashing the future of gaming!"
     />
+     <meta
+      property="og:image"
+      content="./Components/vlogo.png"
+    />
         <body className={inter.className}>{children}</body>
       </html>
     
