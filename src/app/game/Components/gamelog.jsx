@@ -210,8 +210,8 @@ export default function Create({ params }) {
 
 
           {
-            members.map((member) => (
-              <div className='border-2 border-warning rounded px-2 py-1 logs'>
+            members.map((member, index) => (
+              <div className='border-2 border-warning rounded px-2 py-1 logs' key={index}>
                 <button
                   className="rounded-md bg-red-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 mt-1"
                 >
