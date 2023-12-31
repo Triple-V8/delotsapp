@@ -1,6 +1,6 @@
 
 import Image from 'next/image';
-import logo1 from "./3plevblue.jpeg";
+import logo1 from "./3plevlong.png";
 import logo2 from "./Chainlink_Logo.svg.png";
 import logo3 from "./pngegg.png";
 import logo4 from "./nextjs-icon.png";
