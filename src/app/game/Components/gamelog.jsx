@@ -4,7 +4,7 @@ import { useSearchParams } from 'next/navigation'
 import { useAccount, useNetwork, useSwitchNetwork, useContractWrite } from 'wagmi'
 import { getWalletClient, publicClient, readContract, getContract, watchContractEvent, writeContract } from '@wagmi/core'
 import ConnectButton from "../../create/Components/connectwallet";
-import { ABI } from '../../constants/abi';
+import { ABI5 } from '../../constants/abi5';
 import CountdownTimer from './countdown';
 
 export default function Create({ params }) {
@@ -15,15 +15,20 @@ export default function Create({ params }) {
     const [ creator, setCreator ] = useState();
     const [ targetTime, setTargetTime ] = useState();
     const [ winner, setWinner ] = useState();
-    const abi = ABI;
+    const [ winner1, setWinner1 ] = useState();
+    const [ winner2, setWinner2 ] = useState();
+    const [ winner3, setWinner3 ] = useState();
+    const [ winner4, setWinner4 ] = useState();
+    const [ winners_, setWinners_ ] = useState([]);
+    const abi = ABI5;
     const searchParams = useSearchParams();
     let contractAddress = searchParams.get("contractAddress")
     let chain = searchParams.get("chain")
 
-    const contract = getContract({
-      address: contractAddress,
-      abi: abi,
-    });
+    // const contract = getContract({
+    //   address: contractAddress,
+    //   abi: abi,
+    // });
   
     
     function searchStringInArray(string, array) {
@@ -38,7 +43,7 @@ export default function Create({ params }) {
     let endGame = async() => {
       let hash = await writeContract({
         address: contractAddress,
-        abi: ABI,
+        abi: abi,
         functionName: 'startWinnerSelection'
       })
       hash = hash.hash
@@ -123,10 +128,6 @@ export default function Create({ params }) {
                   let interval = await getInterval()
                   let timestamp = start + interval
                   setTargetTime(parseInt(timestamp))
-                  console.log("Get start time ", start)
-                console.log("Get Interval ", interval)
-                console.log("Time stamp ", timestamp)
-                console.log("Target time ", targetTime)
     
                 })();
                 
@@ -154,12 +155,74 @@ export default function Create({ params }) {
                   })
                   setWinner(winner)
                 }
+            const getWinner1 = async () =>  {
+              console.log("Contract address ", contractAddress, "Chain ", chain);
+              let winner = await readContract({
+                  address: contractAddress,
+                  abi: abi,
+                  functionName: 'winner1',
+                  chain: chain,
+                  })
+                  setWinner1(winner)
+                }
+            const getWinner2 = async () =>  {
+              console.log("Contract address ", contractAddress, "Chain ", chain);
+              let winner = await readContract({
+                  address: contractAddress,
+                  abi: abi,
+                  functionName: 'winner2',
+                  chain: chain,
+                  })
+                  setWinner2(winner)
+                }
+            
+                const getWinner3 = async () =>  {
+                  console.log("Contract address ", contractAddress, "Chain ", chain);
+                  let winner = await readContract({
+                      address: contractAddress,
+                      abi: abi,
+                      functionName: 'winner3',
+                      chain: chain,
+                      })
+                      setWinner3(winner)
+                    }
+
+                    const getWinner4 = async () =>  {
+                      console.log("Contract address ", contractAddress, "Chain ", chain);
+                      let winner = await readContract({
+                          address: contractAddress,
+                          abi: abi,
+                          functionName: 'winner4',
+                          chain: chain,
+                          })
+                          setWinner4(winner)
+                        }
+            
         checkGame();
         getCreator();
         getMaxPlayers();
         getEvents();
         getWinner();
+        getWinner1();
+        getWinner2();
+        getWinner3();
+        getWinner4();
+        console.log("winners ", winners_[1])
     }, [address])
+
+    let winnerBlock = (address, position) => {
+      return (
+        <div className='border-2 border-warning rounded px-2 py-1 logs'>
+                <button
+                  className="rounded-md bg-red-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 mt-1"
+                >
+                  {position}
+                </button>
+                <span className="gap-x-3 ms-5">{address.slice(0, 4)}...{address.slice(-4)} won game</span>
+         
+              </div>
+      )
+    }
 
     //conditional return 2 different pages, use useEffect to check if the address is part of the players, update a useState, if use
     //if useState is true show game events else display address is not a member of game with join game button
@@ -198,15 +261,33 @@ export default function Create({ params }) {
           <p>{(members.length < maxPlayers) ? "Game in play" : "Game Over"}</p>
           
 
-          {(members.length === maxPlayers) ?  <div className='border-2 border-warning rounded px-2 py-1 logs'>
-                <button
-                  className="rounded-md bg-red-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 mt-1"
-                >
-                  Game winner
-                </button>
-                <span className="gap-x-3 ms-5">{winner.slice(0, 4)}...{winner.slice(-4)} won game</span>
-         
-              </div> : <div></div>}
+          {(members.length === maxPlayers) ? 
+            <> 
+              {winnerBlock(winner, "1st winner")} 
+                {
+                (winner2) ? 
+                  <> 
+                    {winnerBlock(winner1, "2nd winner")} 
+                    {winnerBlock(winner2, "3rd winner")} 
+                  </>: 
+              <div>
+              </div>
+                }
+              {(winner4) ? 
+                  <> 
+                    {winnerBlock(winner3, "4th winner")} 
+                    {winnerBlock(winner4, "5th winner")}
+                  </>
+                
+              : 
+              <div>
+              </div>
+              }
+              </>
+            
+          
+          : <div></div>   
+        }
 
 
           {

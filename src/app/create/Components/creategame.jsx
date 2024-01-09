@@ -12,12 +12,18 @@ import useCopyToClipboard from './copyToclipBoard';
 import { polygonMumbai } from '@wagmi/core/chains'
 import { ABI } from '../../constants/abi';
 import bytecode from '../../constants/bytecode';
+import { ABI3 } from '../../constants/abi3';
+import bytecode3 from '../../constants/bytecode3';
+import { ABI5 } from '../../constants/abi5';
+import bytecode5 from '../../constants/bytecode5';
 import { safeAddress, LINK_TOKEN, VRF_COORDINATOR, KEY_HASH, FEE, safeFee} from '../../constants/mumbaiarg'
 
 
 
 export default function Create() {
   const abi = ABI;
+  const abi3 = ABI3;
+  const abi5 = ABI5;
   const { address, isConnecting, isDisconnected } = useAccount()
   const { chain } = useNetwork()
   const { copied, handleCopy } = useCopyToClipboard();
@@ -33,6 +39,7 @@ export default function Create() {
   const [isDeploying, setIsDeploying] = useState(false);
   const [isInitiating, setIsInitiating] = useState(false);
   const [isStarting, setIsStarting] = useState(false);
+  const [minimum, setMinimum] = useState(1)
 
   //Duration
   const [days, setDays] = useState(0);
@@ -101,13 +108,17 @@ const handleCopyCode = () => {
   const [winners, setWinners] = useState(1);
   const handleWinners = (event) => {
     setWinners(event.target.value);
-    setNoOfPlayers(event.target.value * 2)
+    
+    setNoOfPlayers(event.target.value)
+    setMinimum(event.target.value)
+
 
   };
 
   //Handle No of players
-  const [noOfPlayers, setNoOfPlayers] = useState(winners * 2);
+  const [noOfPlayers, setNoOfPlayers] = useState(1);
   const handleNoOfPlayers = (event) => {
+    
     setNoOfPlayers(event.target.value);
   };
 
@@ -172,8 +183,15 @@ const handleCopyCode = () => {
 
       convertToSeconds()
 
-      if((chained === "") || (winners === "") || (noOfPlayers === "") || (entryFee === "")){
+      if((chained === "") || (winners === "") || (noOfPlayers === "") || (entryFee === "") ){
         setErrors("Missing Item, Ensure you complete the form");
+        setIsErrorOpen(true)
+        return;
+
+      }
+
+      if(noOfPlayers < minimum ){
+        setErrors("Winners are less than players");
         setIsErrorOpen(true)
         return;
 
@@ -201,24 +219,58 @@ const handleCopyCode = () => {
     //deployContract
     console.log("ABI", abi);
     console.log("Address", address);
-    console.log("Bytecode", bytecode);
+    console.log("Bytecode3", bytecode5);
 
     setIsOpen(true);
     setIsDeploying(true);
     
     console.log("safe address ", safeAddress, "coordinator ", VRF_COORDINATOR, "Link token ", LINK_TOKEN, "KEY_HASH ", KEY_HASH, "Fee ", FEE, "Seconds ", inSeconds.toString())
     let hash;
-    try {
-    hash = await walletClient.deployContract({
-      abi,
-      address,
-      args: [safeAddress, VRF_COORDINATOR, LINK_TOKEN, KEY_HASH, FEE, inSeconds.toString()],
-      bytecode
-    })
-  } catch(error) {
-      setErrors("Unable to deploy contract");
+    console.log("Winner ", winners)
+    console.log("Players ", noOfPlayers)
+    if(winners == 1){
+      try {
+        hash = await walletClient.deployContract({
+          abi,
+          address,
+          args: [safeAddress, VRF_COORDINATOR, LINK_TOKEN, KEY_HASH, FEE, inSeconds.toString()],
+          bytecode
+        })
+      
+      } catch(error) {
+          setErrors("Unable to deploy contract");
+          setIsErrorOpen(true);
+      }
+    } else if(winners == 3){
+      try {
+        hash = await walletClient.deployContract({
+          abi: abi3,
+          address,
+          args: [safeAddress, VRF_COORDINATOR, LINK_TOKEN, KEY_HASH, FEE, inSeconds.toString()],
+          bytecode: bytecode3
+        })
+      
+      } catch(error) {
+          setErrors("Unable to deploy contract");
+          setIsErrorOpen(true);
+      }
+    }else if(winners == 5){
+      try {
+        hash = await walletClient.deployContract({
+          abi: abi5,
+          address,
+          args: [safeAddress, VRF_COORDINATOR, LINK_TOKEN, KEY_HASH, FEE, inSeconds.toString()],
+          bytecode: bytecode5
+        })
+      
+      } catch(error) {
+          setErrors("Unable to deploy contract");
+          setIsErrorOpen(true);
+      }
+    }else{
+      setErrors("Invalid number of winner(s)");
       setIsErrorOpen(true);
-  }
+    }
 
     console.log("Deploy Hash ", hash);
 
@@ -296,6 +348,7 @@ const handleCopyCode = () => {
     console.log("Parameter ", parame)
     let backendResponse = await sendToBackend(parame) 
     console.log("backendResponse ", backendResponse)
+    setIsStarting(false);
     setErrors("");
     handleRequestClose()
     setCode(code);
@@ -472,7 +525,7 @@ const handleCopyCode = () => {
                 id="no-of-player" 
                 autoComplete="given-name"
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                value={noOfPlayers} onChange={handleNoOfPlayers} min={(parseInt(winners) * 2).toString()}
+                value={noOfPlayers} onChange={handleNoOfPlayers} min={(parseInt(winners)).toString()}
               />
             </div>
           </div>

@@ -90,7 +90,7 @@ export default function Joins () {
       setIsErrorOpen(true);
       setIsLoading(false);
   }
-  
+  console.log("Max players ", maxPlayers)
       if(addresses.length === maxPlayers){
         setErrors("Game is over")
         setIsErrorOpen(true)
