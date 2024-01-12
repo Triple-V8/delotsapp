@@ -12,23 +12,64 @@ import Modal from "react-modal";
 export default function Joins () {
   const abi = ABI;
   const { address, isConnected } = useAccount();
+  const { chain } = useNetwork()
   const [ buttonText, setButtonText ] = useState("Join game")
   const [isLoading, setIsLoading] = useState(false);
   const [ code, setCode ] = useState("")
   const [isOpen, setIsOpen] = useState(false);
   const [errors, setErrors] = useState();
+  const [history, setHistory] = useState([]);
   const [isErrorOpen, setIsErrorOpen] = useState(false);
   const { open } = useWeb3Modal();
   const router = useRouter();
+  const { chains, error, pendingChainId, switchNetwork } =
+  useSwitchNetwork()
+
+
+  //convert chain name to chainId
+  const chainnameToId = {
+    MUMBAI : "80001"
+  }
 
   //For the modal
     const handleRequestClose = () => {
       setIsErrorOpen(false);
   };
 
+  //Send data to database
+  async function sendToBackend(dataObject) {
+    let url = "https://delots.cyclic.app/History"
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(dataObject)
+    }; 
+    try {
+      const response = await fetch(url, options);
+      const responseData = await response.json();
+      return responseData;
+    } catch (error) {
+      console.error('Error sending PUT request:', error);
+      return null;
+    }
+  }
+  
+
   useEffect(()=>{
-    isConnected ? setButtonText("Join game") : setButtonText("Connect wallet")
-  }, [isConnected])
+    isConnected ? setButtonText("Join game") : setButtonText("Connect wallet");
+
+    async function fetchAddressHistory(address) {
+      let url = `https://delots.cyclic.app/History/${address}`
+      const response = await fetch(url);
+      const data = await response.json();
+      setHistory(data);
+    }
+    fetchAddressHistory(address)
+    console.log('History ', history)
+
+  }, [isConnected, address])
     
     async function fetchAddressChain(code) {
       let url = `https://delots.cyclic.app/Codes/${code}`
@@ -52,7 +93,11 @@ export default function Joins () {
 
     async function getGame(code) {
 
-
+      if(code === ""){
+        setErrors("Enter a valid code");
+        setIsErrorOpen(true);
+        return;
+       }
      if(!isConnected){
       open()
       return;
@@ -60,8 +105,16 @@ export default function Joins () {
      setIsLoading(true);
      let codeInfo = await fetchAddressChain(code);
      console.log("codeInfo ", codeInfo);
+     console.log("Chain Id ", chainnameToId[codeInfo.chain])
+     console.log('Chain ', chain.id)
 
-
+     if (chain.id.toString() !== chainnameToId[codeInfo.chain]){
+      setErrors("Ensure you are connected to the right chain");
+      setIsErrorOpen(true);
+      switchNetwork(chainnameToId[codeInfo.chain])
+      setIsLoading(false);
+      return;
+    }
 
      let addresses = await readContract({
       address: codeInfo.address,
@@ -130,9 +183,24 @@ export default function Joins () {
       let data = await waitForTransaction({
         hash,
       })
+
+      
+
+      let parame = {"address" : address, "code" : code, "chain" : codeInfo.chain}
+      console.log("Parameter ", parame)
+      let backendResponse = await sendToBackend(parame) 
+      console.log("backendResponse ", backendResponse)
+
       //redirect to gamelogs
       router.push(`/game?contractAddress=${codeInfo.address}&chain=${codeInfo.chain}`)
       
+    }
+    if (chain.id.toString() !== chainnameToId[codeInfo.chain]){
+      setErrors("Ensure you are connected to the right chain");
+      setIsErrorOpen(true);
+      switchNetwork(chainnameToId[codeInfo.chain])
+      setIsLoading(false);
+      return;
     }
 
     //redirect to gamelogs
@@ -141,6 +209,19 @@ export default function Joins () {
     setIsLoading(false);
   }
 
+  let historyBlock = (code, chain) => {
+    return (
+      <div className='border-2 border-warning rounded px-2 py-1 logs'>
+              <span className='text-red-600' aria-hidden="true">&rarr;</span>
+              <span className="gap-x-1 ms-5"><span className='text-red-600'>{code}</span> on {chain} chain   </span> 
+              <button
+                className="rounded-md bg-red-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 mt-1"
+              onClick={()=> getGame(code)}>
+                View game
+              </button>
+            </div>
+    )
+  }
    
 
   return (
@@ -174,7 +255,7 @@ export default function Joins () {
             <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Join game</h2>
             <form className="mx-auto mt-16 max-w-xl sm:mt-20" onSubmit={(event) => event.preventDefault()}>
                 <div>
-                  <label htmlFor="last-name" className="block text-sm font-semibold leading-6 text-gray-900">
+                  <label htmlFor="game-code" className="block text-sm font-semibold leading-6 text-gray-900">
                     Enter game code
                   </label>
                   <div className="mt-2.5">
@@ -203,7 +284,17 @@ export default function Joins () {
 
         <div className="mx-auto max-w-2xl text-center mt-10">
         <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Game History</h2>
-
+        {
+          (history.length > 0) ? 
+           history.map((member, index) => (
+            <div key={index}>
+              {historyBlock(member.code, member.chain)}
+            </div>
+           )
+          ) :
+          <div></div>
+           
+        }
         </div>
         </div>
 }

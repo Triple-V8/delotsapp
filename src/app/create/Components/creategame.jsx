@@ -47,6 +47,7 @@ export default function Create() {
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   let inSeconds;
+  
 
   const handleInputChange = (e, x, max) => {
 
@@ -116,7 +117,7 @@ const handleCopyCode = () => {
   };
 
   //Handle No of players
-  const [noOfPlayers, setNoOfPlayers] = useState(1);
+  const [noOfPlayers, setNoOfPlayers] = useState(2);
   const handleNoOfPlayers = (event) => {
     
     setNoOfPlayers(event.target.value);
@@ -343,7 +344,6 @@ const handleCopyCode = () => {
     console.log("Code ", code);
 
     //send to backend
-    console.log
     let parame = {"code" : code, "address" : contractAddress, "chain" : idToChain[chained]}
     console.log("Parameter ", parame)
     let backendResponse = await sendToBackend(parame) 
