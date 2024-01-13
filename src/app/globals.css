@@ -26,6 +26,10 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+.listStyle{
+  list-style-type: disc;
+}
+
 .connectbtn{
   position:absolute; top:3%; right:5%;
 }

@@ -10,6 +10,7 @@ import ConnectButton from "./connectwallet";
 import { getContractAddress, createPublicClient, http, parseEther } from 'viem';
 import useCopyToClipboard from './copyToclipBoard';
 import { polygonMumbai } from '@wagmi/core/chains'
+import Link from 'next/link';
 import { ABI } from '../../constants/abi';
 import bytecode from '../../constants/bytecode';
 import { ABI3 } from '../../constants/abi3';
@@ -471,7 +472,7 @@ const handleCopyCode = () => {
 
 
       </div>
-      <a href="./"><div className="font-semibold text-red-600 back"><span aria-hidden="true">&larr;</span> Home </div></a>
+      <a href="/"><div className="font-semibold text-red-600 back"><span aria-hidden="true">&larr;</span> Home </div></a>
       <div className="mx-auto max-w-2xl text-center">
         <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Create game</h2>
         <p className="mt-2 text-lg leading-8 text-gray-600">
@@ -495,6 +496,12 @@ const handleCopyCode = () => {
             <option value="">Others coming soon</option>
             
             </select>
+            <div className="block text-sm font-semibold leading-6 text-gray-900">Get polygon testnet tokens <Link
+                href="https://faucet.quicknode.com/polygon/mumbai"
+                className="font-semibold text-red-600"
+              >
+                here
+              </Link></div>
             </div>
           </div>
           <div>

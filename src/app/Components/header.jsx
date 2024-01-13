@@ -8,7 +8,7 @@ import logo from "./vlogo.png";
 
 
 const navigation = [
-  { name: 'How to', href: './howto' },
+  { name: 'How to play', href: './howto' },
   { name: 'Features', href: '#features' },
   { name: 'Categories', href: '#categories' },
   { name: 'Reach us', href: '#reachus' },
@@ -24,7 +24,7 @@ export default function Header() {
       <header className="absolute inset-x-0 top-0 z-10">
         <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
           <div className="flex lg:flex-1">
-            <a href="#" className="-m-1.5 p-1.5">
+            <a href="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Delot</span>
               <Image
                 className="h-8 w-auto"
@@ -62,7 +62,7 @@ export default function Header() {
           <div className="fixed inset-0 z-50" />
           <Dialog.Panel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div className="flex items-center justify-between">
-              <a href="#" className="-m-1.5 p-1.5">
+              <a href="/" className="-m-1.5 p-1.5">
                 <span className="sr-only">Delot</span>
                 <Image
                   className="h-8 w-auto"
@@ -139,6 +139,16 @@ export default function Header() {
             <p className="mt-6 text-lg leading-8 text-gray-600">
             Discover the magic of decentralized blockchain lotteries. Our platform ensures fair play, instant payouts, and provably random draws
             </p>
+            <div className="sm:mb-8 lg:hidden sm:flex sm:justify-center">
+            <div className="relative rounded-full text-sm leading-6 text-gray-600">
+              
+              <Link href="./howto" className="font-semibold text-red-600">
+                <span className="absolute inset-0" aria-hidden="true" />
+                How to play <span aria-hidden="true">&rarr;</span>
+              </Link>
+
+            </div>
+          </div>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Link
                 href="./join"

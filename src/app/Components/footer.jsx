@@ -17,10 +17,10 @@ export default function Footers() {
             name=" Delot"
           />
           <Footer.LinkGroup className='text-danger'>
-            <Footer.Link href="./howto" className='ms-2 me-2'><span className="omoor">How to</span></Footer.Link>
-            <Footer.Link href="#features" className='ms-2 me-2'><span className="omoor">Features</span></Footer.Link>
-            <Footer.Link href="#categories" className='ms-2 me-2'><span className="omoor">Categories</span></Footer.Link>
-            <Footer.Link href="#about" className='ms-2 me-2'><span className="omoor">About</span></Footer.Link>
+            <Footer.Link href="/howto" className='ms-2 me-2'><span className="omoor">How to</span></Footer.Link>
+            <Footer.Link href="/#features" className='ms-2 me-2'><span className="omoor">Features</span></Footer.Link>
+            <Footer.Link href="/#categories" className='ms-2 me-2'><span className="omoor">Categories</span></Footer.Link>
+            <Footer.Link href="/#about" className='ms-2 me-2'><span className="omoor">About</span></Footer.Link>
           </Footer.LinkGroup>
         </div>
         <Footer.Divider />
