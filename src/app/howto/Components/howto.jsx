@@ -23,7 +23,7 @@ export default function Howto() {
           </div>
           <div className="mx-auto max-w-2xl ">
               <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl text-center">How to play</h2>
-              <p className="mt-6 text-lg leading-8 text-gray-600">To get started with your first lottery, you need an ethereum wallet. Follow the steps in this <Link href="https://support.metamask.io/hc/en-us/articles/360015489531-Getting-started-with-MetaMask" className="font-semibold text-red-600">link</Link> do download one if you don't have any yet:</p>
+              <p className="mt-6 text-lg leading-8 text-gray-600">To get started with your first lottery, you need an ethereum wallet. Follow the steps in this <Link href="https://support.metamask.io/hc/en-us/articles/360015489531-Getting-started-with-MetaMask" className="font-semibold text-red-600">link</Link> do download one if you don't have any yet</p>
           
               <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl mt-6 text-center">To create game</h2>
               <p className="mt-6 text-lg leading-8 text-gray-600">
