@@ -8,7 +8,7 @@ import Footers from '../../Components/footer';
 
 export default function Howto() {
     return (
-    <div>
+    <div className="isolate bg-white px-6 lg:px-8">
           <div className="flex lg:flex-1 p-6 lg:px-8">
                   <a href="/" className="-m-1.5 p-1.5">
                   <span className="sr-only">Delot</span>
