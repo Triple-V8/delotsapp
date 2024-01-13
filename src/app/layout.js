@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
         />
         <title>Delots</title>
         <meta property="og:title" content="Delots" />
-        <meta name="image" content="./vlogo.png">        
+        <meta name="image" content="./vlogo.png" />        
         <meta
           property="og:image"
           content="./vlogo.png"
